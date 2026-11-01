@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GRE Flashcards</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1b1f24;--muted:#5d6670;--line:#d9dde2;--accent:#1f5fbf;--again:#c0392b;--hard:#d98a00;--good:#2e8b57;--easy:#2874a6}
+@media (prefers-color-scheme:dark){:root{--bg:#14171a;--card:#1d2125;--text:#eceff2;--muted:#9aa4ae;--line:#323940;--accent:#6aa3f5;--again:#e06a5c;--hard:#e0a63a;--good:#57b985;--easy:#5ba3d0}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.45}
+.wrap{max-width:680px;margin:0 auto;padding:12px 14px 40px}
+h1{font-size:20px;margin:6px 0 10px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+nav button,.btn{border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 14px;border-radius:8px;font-size:14px;cursor:pointer}
+nav button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stats{display:flex;gap:8px;margin-bottom:12px}
+.stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px;text-align:center;font-size:12px;color:var(--muted)}
+.stat b{display:block;font-size:20px;color:var(--text)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 18px;min-height:230px;text-align:center;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.word{font-size:32px;font-weight:bold;word-break:break-word}
+.def{font-size:18px}.ex{font-size:15px;color:var(--muted);font-style:italic}
+.grp{font-size:13px;color:var(--accent)}
+.hint{font-size:13px;color:var(--muted)}
+.rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.rate button{padding:12px 4px;border:0;border-radius:8px;color:#fff;font-size:14px;cursor:pointer}
+.rate small{display:block;font-size:11px;opacity:.9}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+label{display:block;font-size:13px;color:var(--muted);margin:8px 0 3px}
+input,textarea{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font-size:15px;font-family:inherit}
+textarea{min-height:110px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.d{color:var(--again);border-color:var(--again)}
+.item{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.item span{color:var(--muted)}
+.item button{border:0;background:none;color:var(--again);cursor:pointer;font-size:13px}
+.msg{font-size:13px;color:var(--good);margin-top:8px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>GRE Flashcards</h1>
+<nav id="nav"></nav>
+<div id="view"></div>
+</div>
+<script>
+// Starter deck: word | definition | example | synonym group. Add your own in the app or edit this list.
+var SEED = [
+"abate|to become less intense|The storm abated by morning.|decrease",
+"abstruse|hard to understand|The professor's abstruse theory confused the class.|obscure",
+"aberrant|departing from the normal|His aberrant behavior worried colleagues.|abnormal",
+"acumen|keen insight in a field|Her business acumen saved the firm.|insight",
+"admonish|to warn or reprimand gently|The coach admonished him for being late.|criticize",
+"aesthetic|relating to beauty|The aesthetic appeal of the design won praise.|beauty",
+"alacrity|cheerful eagerness|She accepted the job with alacrity.|eagerness",
+"ambivalent|having mixed feelings|He was ambivalent about moving abroad.|uncertain",
+"ameliorate|to make better|Reforms ameliorated working conditions.|improve",
+"anomaly|something that deviates from the norm|The result was an anomaly in the data.|abnormal",
+"apathy|lack of interest or concern|Voter apathy kept turnout low.|indifference",
+"arduous|very difficult, requiring effort|The arduous climb took six hours.|difficult",
+"articulate|to express clearly|She articulated her objections well.|express",
+"ascetic|living with strict self-denial|He led an ascetic life in the hills.|austere",
+"audacious|boldly daring|An audacious plan to cross the desert.|bold",
+"austere|severe, plain, without luxury|The monastery had an austere interior.|austere",
+"banal|lacking originality, trite|The film's banal dialogue bored critics.|trite",
+"belie|to give a false impression of|His calm tone belied his anxiety.|contradict",
+"benevolent|kind and well-meaning|A benevolent donor funded the clinic.|kind",
+"bolster|to support or strengthen|New evidence bolstered her claim.|support",
+"bombastic|pompous, overblown in speech|The senator's bombastic speech irritated listeners.|pompous",
+"capricious|unpredictable, changing suddenly|Capricious weather ruined the picnic.|fickle",
+"candid|frank and honest|A candid review of the product.|frank",
+"censure|strong official criticism|The board issued a censure.|criticize",
+"circumspect|careful, cautious about risks|Be circumspect when signing contracts.|cautious",
+"coalesce|to come together into one|Separate groups coalesced into a movement.|merge",
+"cogent|clear, logical and convincing|A cogent argument for reform.|convincing",
+"complacent|smugly self-satisfied|The champion grew complacent.|smug",
+"conundrum|a confusing problem or question|The budget gap is a real conundrum.|puzzle",
+"corroborate|to confirm with evidence|Witnesses corroborated her story.|confirm",
+"credulous|too ready to believe|Credulous buyers fell for the scam.|gullible",
+"cursory|hasty, not thorough|A cursory glance at the report.|superficial",
+"daunting|intimidating|A daunting task lay ahead.|intimidating",
+"debunk|to expose as false|Scientists debunked the myth.|refute",
+"deference|respectful submission|He showed deference to his elders.|respect",
+"delineate|to describe or outline precisely|The contract delineates each duty.|describe",
+"denigrate|to criticize unfairly|Do not denigrate your rivals.|belittle",
+"desultory|lacking a plan, half-hearted|A desultory conversation.|aimless",
+"diatribe|a bitter verbal attack|He launched into a diatribe against the policy.|tirade",
+"diffident|shy, lacking self-confidence|A diffident speaker.|shy",
+"dilettante|a person with superficial interest|A dilettante in painting.|amateur",
+"disparate|essentially different, unrelated|Disparate groups joined the cause.|different",
+"dogmatic|asserting opinions as fact|A dogmatic approach to teaching.|rigid",
+"eclectic|drawn from many sources|An eclectic music collection.|varied",
+"efficacy|ability to produce a desired result|The efficacy of the drug was proven.|effectiveness",
+"enigmatic|mysterious, hard to interpret|Her enigmatic smile puzzled him.|mysterious",
+"ephemeral|lasting a very short time|Fame can be ephemeral.|fleeting",
+"equivocal|open to more than one interpretation|An equivocal answer.|ambiguous",
+"esoteric|understood by only a few|Esoteric knowledge of ancient texts.|obscure",
+"exacerbate|to make worse|Stress exacerbated his illness.|worsen",
+"fastidious|very attentive to detail|A fastidious editor.|meticulous",
+"fervent|passionate, intense|A fervent supporter of the team.|passionate",
+"flout|to openly disregard a rule|Drivers flouted the speed limit.|defy",
+"garrulous|excessively talkative|A garrulous neighbor.|talkative",
+"gregarious|sociable, enjoying company|A gregarious host.|sociable",
+"hackneyed|overused, unoriginal|A hackneyed plot.|trite",
+"harbinger|a sign of what is to come|Crocuses are a harbinger of spring.|omen",
+"iconoclast|one who attacks cherished beliefs|The iconoclast mocked tradition.|rebel",
+"idiosyncratic|peculiar to an individual|His idiosyncratic style of teaching.|peculiar",
+"inchoate|just begun, not fully formed|An inchoate idea.|rudimentary",
+"insipid|lacking flavor or interest|An insipid speech.|dull",
+"laconic|using very few words|A laconic reply.|concise",
+"lucid|clearly expressed|A lucid explanation.|clear",
+"magnanimous|generous toward a rival|A magnanimous victor.|generous",
+"mitigate|to make less severe|Trees mitigate noise.|lessen",
+"mundane|ordinary, everyday|A mundane routine.|ordinary",
+"obdurate|stubbornly refusing to change|An obdurate negotiator.|stubborn",
+"obsequious|excessively eager to please|An obsequious assistant.|servile",
+"ostentatious|showy, designed to impress|An ostentatious mansion.|showy",
+"paucity|a small amount, scarcity|A paucity of evidence.|scarcity",
+"pernicious|harmful in a gradual way|A pernicious influence.|harmful",
+"pragmatic|practical rather than idealistic|A pragmatic solution.|practical",
+"prodigal|wastefully extravagant|A prodigal spender.|wasteful",
+"quixotic|idealistic but impractical|A quixotic quest.|impractical",
+"recalcitrant|stubbornly resistant to authority|A recalcitrant student.|stubborn",
+"replete|filled or well supplied|The essay is replete with examples.|full",
+"sanguine|optimistic, hopeful|A sanguine outlook.|optimistic",
+"spurious|false, not genuine|A spurious claim.|false",
+"substantiate|to provide evidence for|Substantiate your claim.|prove",
+"tenuous|weak or slight|A tenuous connection.|weak",
+"trenchant|sharp, forceful in expression|A trenchant critique.|incisive",
+"truncate|to shorten by cutting|The report was truncated.|shorten",
+"ubiquitous|present everywhere|Smartphones are ubiquitous.|widespread",
+"venerate|to regard with great respect|They venerate their ancestors.|revere",
+"verbose|using more words than needed|A verbose email.|wordy",
+"vindicate|to clear of blame|The evidence vindicated him.|exonerate",
+"volatile|liable to change rapidly|A volatile market.|unstable",
+"zealous|filled with energy for a cause|A zealous campaigner.|passionate"
+];
+
+var KEY="gre_cards_v1", SKEY="gre_settings_v1";
+var cards=[], settings={newPerDay:30,date:"",newToday:0}, view="study", queue=[], flipped=false, msg="";
+
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function fetchStore(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function today(){return new Date().toISOString().slice(0,10)}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function mk(w,d,e,g){return {id:uid(),w:w,d:d,e:e||"",g:g||"",ease:2.5,ivl:0,due:0,reps:0,seen:false}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function save(){store(KEY,cards);store(SKEY,settings)}
+
+function init(){
+  var c=fetchStore(KEY), s=fetchStore(SKEY);
+  if(s)settings=s;
+  if(settings.date!==today()){settings.date=today();settings.newToday=0}
+  if(c&&c.length){cards=c}
+  else{cards=SEED.map(function(l){var p=l.split("|");return mk(p[0],p[1],p[2],p[3])})}
+  save();buildQueue();render();
+}
+
+function buildQueue(){
+  var now=Date.now();
+  var due=cards.filter(function(c){return c.seen&&c.due<=now}).sort(function(a,b){return a.due-b.due});
+  var room=Math.max(0,settings.newPerDay-settings.newToday);
+  var fresh=cards.filter(function(c){return !c.seen}).slice(0,room);
+  queue=due.concat(fresh).map(function(c){return c.id});
+  flipped=false;
+}
+function byId(id){return cards.filter(function(c){return c.id===id})[0]}
+
+function rate(q){
+  var c=byId(queue[0]); if(!c)return;
+  if(!c.seen){c.seen=true;settings.newToday++}
+  if(q===0){
+    c.ease=Math.max(1.3,c.ease-0.2);c.ivl=0;c.due=Date.now()+10*60000;
+    queue.push(queue.shift());
+  }else{
+    c.reps++;
+    if(c.reps===1){c.ivl=q===3?4:1}
+    else{
+      var f=q===1?1.2:(q===2?c.ease:c.ease*1.3);
+      c.ivl=Math.max(c.ivl+1,Math.round(c.ivl*f));
+    }
+    if(q===1)c.ease=Math.max(1.3,c.ease-0.15);
+    if(q===3)c.ease+=0.15;
+    c.due=Date.now()+c.ivl*86400000;
+    queue.shift();
+  }
+  flipped=false;save();render();
+}
+
+function counts(){
+  var now=Date.now();
+  var due=cards.filter(function(c){return c.seen&&c.due<=now}).length;
+  var fresh=Math.min(cards.filter(function(c){return !c.seen}).length,Math.max(0,settings.newPerDay-settings.newToday));
+  var learned=cards.filter(function(c){return c.reps>0}).length;
+  return {due:due,fresh:fresh,total:cards.length,learned:learned};
+}
+
+function parseCSV(text){
+  var rows=[],row=[],cur="",q=false;
+  for(var i=0;i<text.length;i++){
+    var ch=text[i];
+    if(q){if(ch==='"'){if(text[i+1]==='"'){cur+='"';i++}else q=false}else cur+=ch}
+    else if(ch==='"')q=true;
+    else if(ch===','||ch==='\t'){row.push(cur);cur=""}
+    else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cur);cur="";if(row.join("").trim())rows.push(row);row=[]}
+    else cur+=ch;
+  }
+  row.push(cur);if(row.join("").trim())rows.push(row);
+  return rows;
+}
+function csvCell(s){s=String(s==null?"":s);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function download(name,text,type){
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([text],{type:type}));a.download=name;
+  document.body.appendChild(a);a.click();a.remove();
+}
+function importRows(rows){
+  var n=0;
+  rows.forEach(function(r,i){
+    if(i===0&&/^word$/i.test((r[0]||"").trim()))return;
+    if(!r[0]||!r[0].trim()||!r[1]||!r[1].trim())return;
+    cards.push(mk(r[0].trim(),r[1].trim(),(r[2]||"").trim(),(r[3]||"").trim()));n++;
+  });
+  save();buildQueue();return n;
+}
+
+function render(){
+  var nav=document.getElementById("nav");
+  var tabs=[["study","Study"],["add","Add"],["cards","All cards"],["data","Data"]];
+  nav.innerHTML=tabs.map(function(t){return '<button data-v="'+t[0]+'" class="'+(view===t[0]?"on":"")+'">'+t[1]+'</button>'}).join("");
+  Array.prototype.forEach.call(nav.querySelectorAll("button"),function(b){
+    b.onclick=function(){view=b.getAttribute("data-v");msg="";if(view==="study")buildQueue();render()};
+  });
+  var v=document.getElementById("view");
+  if(view==="study")renderStudy(v);
+  else if(view==="add")renderAdd(v);
+  else if(view==="cards")renderCards(v,"");
+  else renderData(v);
+}
+
+function renderStudy(v){
+  var k=counts();
+  var html='<div class="stats"><div class="stat"><b>'+k.due+'</b>Due</div><div class="stat"><b>'+k.fresh+'</b>New today</div><div class="stat"><b>'+k.learned+' / '+k.total+'</b>Learned</div></div>';
+  var c=byId(queue[0]);
+  if(!c){
+    html+='<div class="panel"><b>All done for now.</b><p class="hint">No cards are due. Add more words, raise the daily new-card limit in Data, or come back later.</p></div>';
+    v.innerHTML=html;return;
+  }
+  html+='<div class="card" id="card"><div class="word">'+esc(c.w)+'</div>';
+  if(flipped){
+    html+='<div class="def">'+esc(c.d)+'</div>';
+    if(c.e)html+='<div class="ex">'+esc(c.e)+'</div>';
+    if(c.g)html+='<div class="grp">Group: '+esc(c.g)+'</div>';
+  }else html+='<div class="hint">Tap the card or press Space to show the meaning</div>';
+  html+='</div>';
+  if(flipped){
+    html+='<div class="rate">'
+     +'<button style="background:var(--again)" data-q="0">Again<small>1</small></button>'
+     +'<button style="background:var(--hard)" data-q="1">Hard<small>2</small></button>'
+     +'<button style="background:var(--good)" data-q="2">Good<small>3</small></button>'
+     +'<button style="background:var(--easy)" data-q="3">Easy<small>4</small></button></div>';
+  }
+  v.innerHTML=html;
+  document.getElementById("card").onclick=function(){if(!flipped){flipped=true;render()}};
+  Array.prototype.forEach.call(v.querySelectorAll(".rate button"),function(b){
+    b.onclick=function(){rate(parseInt(b.getAttribute("data-q"),10))};
+  });
+}
+
+function renderAdd(v){
+  v.innerHTML='<div class="panel"><b>Add a card</b>'
+   +'<label>Word</label><input id="fw">'
+   +'<label>Meaning</label><input id="fd">'
+   +'<label>Example sentence (optional)</label><input id="fe">'
+   +'<label>Synonym group (optional)</label><input id="fg">'
+   +'<div class="row"><button class="btn p" id="addbtn">Add card</button></div>'
+   +'<div class="msg">'+esc(msg)+'</div></div>';
+  document.getElementById("addbtn").onclick=function(){
+    var w=document.getElementById("fw").value.trim(),d=document.getElementById("fd").value.trim();
+    if(!w||!d){msg="Word and meaning are required.";render();return}
+    cards.push(mk(w,d,document.getElementById("fe").value.trim(),document.getElementById("fg").value.trim()));
+    save();msg="Added: "+w;render();
+  };
+}
+
+function renderCards(v,q){
+  var list=cards.filter(function(c){return !q||c.w.toLowerCase().indexOf(q.toLowerCase())>-1||c.d.toLowerCase().indexOf(q.toLowerCase())>-1});
+  var html='<div class="panel"><input id="search" placeholder="Search words or meanings" value="'+esc(q)+'">'
+   +'<p class="hint">'+list.length+' cards</p>';
+  list.slice(0,200).forEach(function(c){
+    html+='<div class="item"><div><b>'+esc(c.w)+'</b> <span>'+esc(c.d)+'</span></div><button data-id="'+c.id+'">Delete</button></div>';
+  });
+  if(list.length>200)html+='<p class="hint">Showing the first 200. Search to narrow down.</p>';
+  html+='</div>';
+  v.innerHTML=html;
+  var s=document.getElementById("search");
+  s.oninput=function(){var pos=s.value;renderCards(v,pos);var n=document.getElementById("search");n.focus();n.setSelectionRange(pos.length,pos.length)};
+  Array.prototype.forEach.call(v.querySelectorAll(".item button"),function(b){
+    b.onclick=function(){var id=b.getAttribute("data-id");cards=cards.filter(function(c){return c.id!==id});save();buildQueue();renderCards(v,q)};
+  });
+}
+
+function renderData(v){
+  v.innerHTML='<div class="panel"><b>Import cards (CSV)</b>'
+   +'<p class="hint">Columns: word, meaning, example, group. A header row is optional. You can paste rows or choose a file.</p>'
+   +'<textarea id="paste" placeholder="abate,to become less intense,The storm abated.,decrease"></textarea>'
+   +'<div class="row"><button class="btn p" id="imp">Import pasted rows</button>'
+   +'<input type="file" id="file" accept=".csv,.txt" style="width:auto"></div>'
+   +'<div class="msg" id="m1">'+esc(msg)+'</div></div>'
+   +'<div class="panel"><b>Settings</b><label>New cards per day</label>'
+   +'<input id="npd" type="number" min="0" max="200" value="'+settings.newPerDay+'">'
+   +'<div class="row"><button class="btn" id="setbtn">Save setting</button></div></div>'
+   +'<div class="panel"><b>Backup</b>'
+   +'<p class="hint">Progress is stored in this browser only. Export a backup now and then, and import it on another device.</p>'
+   +'<div class="row"><button class="btn" id="expcsv">Export cards (CSV)</button><button class="btn" id="expjson">Export progress (JSON)</button></div>'
+   +'<label>Restore progress from a JSON backup</label><input type="file" id="jfile" accept=".json">'
+   +'<div class="row"><button class="btn d" id="reset">Reset to the starter deck</button></div></div>';
+  document.getElementById("imp").onclick=function(){
+    var n=importRows(parseCSV(document.getElementById("paste").value));
+    msg="Imported "+n+" cards.";render();
+  };
+  document.getElementById("file").onchange=function(e){
+    var f=e.target.files[0];if(!f)return;
+    var r=new FileReader();r.onload=function(){var n=importRows(parseCSV(String(r.result)));msg="Imported "+n+" cards.";render()};r.readAsText(f);
+  };
+  document.getElementById("setbtn").onclick=function(){
+    settings.newPerDay=Math.max(0,parseInt(document.getElementById("npd").value,10)||0);save();msg="Setting saved.";render();
+  };
+  document.getElementById("expcsv").onclick=function(){
+    var out="word,meaning,example,group\n"+cards.map(function(c){return [c.w,c.d,c.e,c.g].map(csvCell).join(",")}).join("\n");
+    download("gre-cards.csv",out,"text/csv");
+  };
+  document.getElementById("expjson").onclick=function(){
+    download("gre-progress.json",JSON.stringify({cards:cards,settings:settings}),"application/json");
+  };
+  document.getElementById("jfile").onchange=function(e){
+    var f=e.target.files[0];if(!f)return;
+    var r=new FileReader();r.onload=function(){
+      try{var o=JSON.parse(String(r.result));if(o.cards&&o.cards.length){cards=o.cards;if(o.settings)settings=o.settings;save();buildQueue();msg="Backup restored.";render()}else{msg="That file has no cards."; render()}}
+      catch(err){msg="Could not read that file.";render()}
+    };r.readAsText(f);
+  };
+  document.getElementById("reset").onclick=function(){
+    if(confirm("This deletes all your cards and progress. Continue?")){
+      cards=SEED.map(function(l){var p=l.split("|");return mk(p[0],p[1],p[2],p[3])});
+      settings.newToday=0;save();buildQueue();msg="Reset done.";render();
+    }
+  };
+}
+
+document.addEventListener("keydown",function(e){
+  if(view!=="study"||/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  if(e.code==="Space"){e.preventDefault();if(!flipped&&byId(queue[0])){flipped=true;render()}}
+  else if(flipped&&"1234".indexOf(e.key)>-1&&e.key){rate(parseInt(e.key,10)-1)}
+});
+init();
+</script>
+</body>
+</html>
