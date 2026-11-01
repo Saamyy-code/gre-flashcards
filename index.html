@@ -2,73 +2,85 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GRE Flashcards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d3a8a">
+<title>GRE Vocabulary</title>
 <style>
-:root{--bg:#f4f6fa;--surface:#ffffff;--text:#16202c;--muted:#64707d;--line:#e2e7ee;--accent:#2457c5;--accent-soft:#e8eefb;--again:#c8453a;--hard:#c98a1b;--good:#2f8f5b;--easy:#2b78b5;--shadow:0 1px 2px rgba(16,32,52,.06),0 8px 24px rgba(16,32,52,.07)}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1318;--surface:#181e26;--text:#e8edf3;--muted:#98a3b0;--line:#2a323d;--accent:#7aa7f0;--accent-soft:#1d2a40;--again:#e0695d;--hard:#dfa845;--good:#58bb85;--easy:#62a6d6;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+:root{--bg:#f3f5f9;--surface:#fff;--text:#0f1b2d;--muted:#667489;--line:#e3e8f0;--brand:#1d3a8a;--brand2:#3b63d6;--soft:#e9eefb;--again:#c8453a;--hard:#c98a1b;--good:#2f8f5b;--easy:#2b78b5;--shadow:0 1px 2px rgba(15,27,45,.06),0 10px 30px rgba(15,27,45,.08)}
+@media (prefers-color-scheme:dark){:root{--bg:#0c1118;--surface:#161d27;--text:#e9eef5;--muted:#97a3b3;--line:#262f3b;--brand:#6c93ee;--brand2:#8fb0f5;--soft:#1b2740;--again:#e0695d;--hard:#dfa845;--good:#58bb85;--easy:#62a6d6;--shadow:0 1px 2px rgba(0,0,0,.45),0 10px 30px rgba(0,0,0,.4)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
-.wrap{max-width:720px;margin:0 auto;padding:18px 16px 48px}
-header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.logo{width:40px;height:40px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;letter-spacing:.5px}
-header h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.2px}
-header p{margin:0;font-size:13px;color:var(--muted)}
-nav{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:18px;box-shadow:var(--shadow)}
-nav button{flex:1;border:0;background:transparent;color:var(--muted);padding:10px 6px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
-nav button:hover{color:var(--text)}
-nav button.on{background:var(--accent);color:#fff}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:600}
-.stat b{display:block;font-size:24px;letter-spacing:-.5px;color:var(--text);font-weight:700;margin-bottom:2px}
-.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:14px}
-.progress i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
-.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:34px 22px;min-height:280px;text-align:center;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;box-shadow:var(--shadow);animation:fade .2s ease}
-@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
-.tag{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:600}
-.tag.r{left:auto;right:16px}
-.word{font-size:36px;font-weight:700;letter-spacing:-.6px;word-break:break-word}
-.rule{width:44px;height:3px;background:var(--accent);border-radius:99px;opacity:.5}
-.def{font-size:19px;max-width:520px}
+.top{background:linear-gradient(135deg,#1d3a8a,#2f56c4);color:#fff;padding:calc(14px + env(safe-area-inset-top,0px)) 18px 54px}
+.top-in{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.logo{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;letter-spacing:.6px}
+.top h1{font-size:18px;margin:0;font-weight:700;letter-spacing:-.2px}
+.top p{margin:0;font-size:12px;opacity:.8}
+.grow{flex:1}
+.pill{font-size:12px;font-weight:600;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 11px;border-radius:99px;white-space:nowrap}
+.main{max-width:720px;margin:-36px auto 0;padding:0 16px calc(96px + env(safe-area-inset-bottom,0px))}
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px 18px;display:flex;align-items:center;gap:18px;margin-bottom:16px}
+.ring{position:relative;width:76px;height:76px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .t{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:17px;line-height:1.1}
+.ring .t small{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.4px}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:1;text-align:center}
+.nums b{display:block;font-size:24px;font-weight:700;letter-spacing:-.5px}
+.nums span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:600}
+.bar{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin:0 2px 14px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px;transition:width .35s}
+.scene{perspective:1400px;cursor:pointer}
+.flipper{display:grid;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d;min-height:300px}
+.scene.flip .flipper{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:44px 24px 34px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px}
+.face.back{transform:rotateY(180deg)}
+.tag{position:absolute;top:16px;left:18px;font-size:11px;letter-spacing:.9px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.tag.r{left:auto;right:18px}
+.word{font-size:38px;font-weight:800;letter-spacing:-.8px;word-break:break-word}
+.back .word{font-size:26px;color:var(--brand)}
+.rule{width:40px;height:3px;border-radius:99px;background:var(--brand2);opacity:.55}
+.def{font-size:20px;font-weight:500;max-width:520px}
 .ex{font-size:15px;color:var(--muted);font-style:italic;max-width:520px}
-.grp{display:inline-block;font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:99px}
+.grp{font-size:12px;font-weight:700;color:var(--brand);background:var(--soft);padding:5px 12px;border-radius:99px}
 .hint{font-size:13px;color:var(--muted)}
-.rate{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
-.rate button{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:11px 4px 9px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:var(--shadow);transition:transform .1s}
+.rate{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px;transition:opacity .25s}
+.rate.off{opacity:0;pointer-events:none}
+.rate button{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:12px 4px 10px;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:var(--shadow);border-bottom-width:3px}
 .rate button:active{transform:scale(.97)}
 .rate button span{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:2px}
-.rate .a{border-bottom:3px solid var(--again)}.rate .h{border-bottom:3px solid var(--hard)}.rate .g{border-bottom:3px solid var(--good)}.rate .e{border-bottom:3px solid var(--easy)}
-.keys{text-align:center;font-size:12px;color:var(--muted);margin-top:12px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
-.panel h2{font-size:15px;margin:0 0 4px;font-weight:700}
+.rate .a{border-bottom-color:var(--again)}.rate .h{border-bottom-color:var(--hard)}.rate .g{border-bottom-color:var(--good)}.rate .e{border-bottom-color:var(--easy)}
+.keys{text-align:center;font-size:12px;color:var(--muted);margin-top:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.panel h2{font-size:16px;margin:0 0 4px;font-weight:700}
 .panel p.hint{margin:2px 0 8px}
-label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:12px 0 5px;letter-spacing:.2px}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:12px 0 5px}
 input,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font-size:15px;font-family:inherit}
-input:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+input:focus,textarea:focus{outline:2px solid var(--brand2);outline-offset:1px;border-color:transparent}
 textarea{min-height:110px;resize:vertical}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
 .btn{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-.btn:hover{border-color:var(--accent)}
-.btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn:hover{border-color:var(--brand2)}
+.btn.p{background:var(--brand);color:#fff;border-color:var(--brand)}
 .btn.d{color:var(--again);border-color:var(--again)}
 .item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
 .item:last-child{border-bottom:0}
-.item b{display:block}
-.item span{color:var(--muted);font-size:13px}
+.item b{display:block}.item span{color:var(--muted);font-size:13px}
 .item button{border:0;background:none;color:var(--again);cursor:pointer;font-size:13px;font-weight:600;font-family:inherit}
 .msg{font-size:13px;color:var(--good);margin-top:10px;font-weight:600}
-.empty{text-align:center;padding:36px 18px}
+.empty{text-align:center;padding:38px 18px}
 .empty .big{font-size:20px;font-weight:700;margin-bottom:6px}
-@media (max-width:480px){.word{font-size:30px}.def{font-size:17px}.card{min-height:250px}}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+.navin{display:flex;width:100%;max-width:720px}
+nav button{flex:1;border:0;background:none;color:var(--muted);padding:6px 4px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--brand)}
+@media (max-width:480px){.word{font-size:31px}.def{font-size:18px}.hero{padding:14px}.nums b{font-size:21px}}
+@media (prefers-reduced-motion:reduce){.flipper{transition:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header><div class="logo">GRE</div><div><h1>GRE Vocabulary</h1><p>Spaced-repetition flashcards</p></div></header>
-<nav id="nav"></nav>
-<div id="view"></div>
-</div>
+<div class="top"><div class="top-in"><div class="logo">GRE</div><div><h1>GRE Vocabulary</h1><p>Spaced-repetition flashcards</p></div><div class="grow"></div><div class="pill" id="streak"></div></div></div>
+<div class="main"><div id="view"></div></div>
+<nav><div class="navin" id="nav"></div></nav>
 <script>
 // Starter deck: word | definition | example | synonym group. Add your own in the app or edit this list.
 var SEED = [
@@ -163,22 +175,22 @@ var SEED = [
 ];
 
 var KEY="gre_cards_v1", SKEY="gre_settings_v1";
-var cards=[], settings={newPerDay:30,date:"",newToday:0}, view="study", queue=[], flipped=false, msg="", sessionTotal=0, sessionDone=0;
+var cards=[], settings={newPerDay:30,date:"",newToday:0,streak:0,last:""}, view="study", queue=[], flipped=false, msg="", sessionTotal=0, sessionDone=0;
 
 function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function fetchStore(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
-function today(){return new Date().toISOString().slice(0,10)}
+function dayStr(offset){var d=new Date();d.setDate(d.getDate()+(offset||0));return d.toISOString().slice(0,10)}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function mk(w,d,e,g){return {id:uid(),w:w,d:d,e:e||"",g:g||"",ease:2.5,ivl:0,due:0,reps:0,seen:false}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function save(){store(KEY,cards);store(SKEY,settings)}
+function seedDeck(){return SEED.map(function(l){var p=l.split("|");return mk(p[0],p[1],p[2],p[3])})}
 
 function init(){
   var c=fetchStore(KEY), s=fetchStore(SKEY);
-  if(s)settings=s;
-  if(settings.date!==today()){settings.date=today();settings.newToday=0}
-  if(c&&c.length){cards=c}
-  else{cards=SEED.map(function(l){var p=l.split("|");return mk(p[0],p[1],p[2],p[3])})}
+  if(s){for(var k in s)settings[k]=s[k]}
+  if(settings.date!==dayStr(0)){settings.date=dayStr(0);settings.newToday=0}
+  cards=(c&&c.length)?c:seedDeck();
   save();buildQueue();render();
 }
 
@@ -192,9 +204,16 @@ function buildQueue(){
 }
 function byId(id){return cards.filter(function(c){return c.id===id})[0]}
 
+function touchStreak(){
+  if(settings.last===dayStr(0))return;
+  settings.streak=(settings.last===dayStr(-1))?(settings.streak||0)+1:1;
+  settings.last=dayStr(0);
+}
+
 function rate(q){
   var c=byId(queue[0]); if(!c)return;
   if(!c.seen){c.seen=true;settings.newToday++}
+  touchStreak();
   if(q===0){
     c.ease=Math.max(1.3,c.ease-0.2);c.ivl=0;c.due=Date.now()+10*60000;
     queue.push(queue.shift());
@@ -212,7 +231,6 @@ function rate(q){
   }
   flipped=false;save();render();
 }
-
 
 function label(days){return days<1?"10 min":(days===1?"1 day":days+" days")}
 function preview(c,q){
@@ -260,13 +278,22 @@ function importRows(rows){
   save();buildQueue();return n;
 }
 
+var ICONS={
+ study:'<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',
+ add:'<path d="M12 5v14M5 12h14"/>',
+ cards:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+ data:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>'
+};
+
 function render(){
   var nav=document.getElementById("nav");
-  var tabs=[["study","Study"],["add","Add"],["cards","All cards"],["data","Data"]];
-  nav.innerHTML=tabs.map(function(t){return '<button data-v="'+t[0]+'" class="'+(view===t[0]?"on":"")+'">'+t[1]+'</button>'}).join("");
+  var tabs=[["study","Study"],["add","Add"],["cards","Cards"],["data","Settings"]];
+  nav.innerHTML=tabs.map(function(t){return '<button data-v="'+t[0]+'" class="'+(view===t[0]?"on":"")+'"><svg viewBox="0 0 24 24">'+ICONS[t[0]]+'</svg>'+t[1]+'</button>'}).join("");
   Array.prototype.forEach.call(nav.querySelectorAll("button"),function(b){
-    b.onclick=function(){view=b.getAttribute("data-v");msg="";if(view==="study")buildQueue();render()};
+    b.onclick=function(){view=b.getAttribute("data-v");msg="";if(view==="study")buildQueue();render();window.scrollTo(0,0)};
   });
+  var st=settings.streak||0;
+  document.getElementById("streak").textContent=st>0?("Streak: "+st+(st===1?" day":" days")):"Start your streak";
   var v=document.getElementById("view");
   if(view==="study")renderStudy(v);
   else if(view==="add")renderAdd(v);
@@ -274,34 +301,39 @@ function render(){
   else renderData(v);
 }
 
+function flip(){
+  if(flipped||!byId(queue[0]))return;
+  flipped=true;
+  var s=document.getElementById("scene"),r=document.getElementById("rate");
+  if(s)s.classList.add("flip");
+  if(r)r.classList.remove("off");
+}
+
 function renderStudy(v){
   var k=counts();
-  var html='<div class="stats"><div class="stat"><b>'+k.due+'</b>Due</div><div class="stat"><b>'+k.fresh+'</b>New today</div><div class="stat"><b>'+k.learned+'/'+k.total+'</b>Learned</div></div>';
+  var pctLearned=k.total?k.learned/k.total:0, C=2*Math.PI*32;
+  var html='<div class="hero"><div class="ring"><svg width="76" height="76" viewBox="0 0 76 76"><circle cx="38" cy="38" r="32" fill="none" stroke="var(--line)" stroke-width="7"/><circle cx="38" cy="38" r="32" fill="none" stroke="var(--brand2)" stroke-width="7" stroke-linecap="round" stroke-dasharray="'+(pctLearned*C).toFixed(1)+' '+C.toFixed(1)+'"/></svg><div class="t">'+Math.round(pctLearned*100)+'%<small>LEARNED</small></div></div>'
+   +'<div class="nums"><div><b>'+k.due+'</b><span>Due</span></div><div><b>'+k.fresh+'</b><span>New</span></div><div><b>'+k.total+'</b><span>Total</span></div></div></div>';
   var c=byId(queue[0]);
   if(!c){
-    html+='<div class="panel empty"><div class="big">All done for now</div><p class="hint">No cards are due. Add more words, raise the daily new-card limit in Data, or come back later.</p></div>';
+    html+='<div class="panel empty"><div class="big">All done for now</div><p class="hint">No cards are due. Add more words, raise the daily new-card limit in Settings, or come back later.</p></div>';
     v.innerHTML=html;return;
   }
   var pct=sessionTotal?Math.round(sessionDone/sessionTotal*100):0;
-  html+='<div class="progress"><i style="width:'+pct+'%"></i></div>';
-  html+='<div class="card" id="card"><span class="tag">'+(flipped?"Meaning":"Word")+'</span><span class="tag r">'+(sessionDone+1)+' of '+sessionTotal+'</span>';
-  html+='<div class="word">'+esc(c.w)+'</div>';
-  if(flipped){
-    html+='<div class="rule"></div><div class="def">'+esc(c.d)+'</div>';
-    if(c.e)html+='<div class="ex">'+esc(c.e)+'</div>';
-    if(c.g)html+='<div class="grp">'+esc(c.g)+'</div>';
-  }else html+='<div class="hint">Tap the card to reveal the meaning</div>';
-  html+='</div>';
-  if(flipped){
-    html+='<div class="rate">'
-     +'<button class="a" data-q="0">Again<span>'+preview(c,0)+'</span></button>'
-     +'<button class="h" data-q="1">Hard<span>'+preview(c,1)+'</span></button>'
-     +'<button class="g" data-q="2">Good<span>'+preview(c,2)+'</span></button>'
-     +'<button class="e" data-q="3">Easy<span>'+preview(c,3)+'</span></button></div>';
-  }
+  html+='<div class="bar"><i style="width:'+pct+'%"></i></div>';
+  html+='<div class="scene" id="scene"><div class="flipper">'
+   +'<div class="face front"><span class="tag">Word</span><span class="tag r">'+(sessionDone+1)+' of '+sessionTotal+'</span><div class="word">'+esc(c.w)+'</div><div class="hint">Tap to reveal the meaning</div></div>'
+   +'<div class="face back"><span class="tag">Meaning</span><span class="tag r">'+(sessionDone+1)+' of '+sessionTotal+'</span><div class="word">'+esc(c.w)+'</div><div class="rule"></div><div class="def">'+esc(c.d)+'</div>'
+   +(c.e?'<div class="ex">'+esc(c.e)+'</div>':'')+(c.g?'<div class="grp">'+esc(c.g)+'</div>':'')+'</div>'
+   +'</div></div>';
+  html+='<div class="rate off" id="rate">'
+   +'<button class="a" data-q="0">Again<span>'+preview(c,0)+'</span></button>'
+   +'<button class="h" data-q="1">Hard<span>'+preview(c,1)+'</span></button>'
+   +'<button class="g" data-q="2">Good<span>'+preview(c,2)+'</span></button>'
+   +'<button class="e" data-q="3">Easy<span>'+preview(c,3)+'</span></button></div>';
   html+='<div class="keys">Keyboard: Space to flip, 1-4 to rate</div>';
   v.innerHTML=html;
-  document.getElementById("card").onclick=function(){if(!flipped){flipped=true;render()}};
+  document.getElementById("scene").onclick=flip;
   Array.prototype.forEach.call(v.querySelectorAll(".rate button"),function(b){
     b.onclick=function(){rate(parseInt(b.getAttribute("data-q"),10))};
   });
@@ -309,10 +341,10 @@ function renderStudy(v){
 
 function renderAdd(v){
   v.innerHTML='<div class="panel"><h2>Add a card</h2>'
-   +'<label>Word</label><input id="fw">'
-   +'<label>Meaning</label><input id="fd">'
-   +'<label>Example sentence (optional)</label><input id="fe">'
-   +'<label>Synonym group (optional)</label><input id="fg">'
+   +'<label>Word</label><input id="fw" autocomplete="off">'
+   +'<label>Meaning</label><input id="fd" autocomplete="off">'
+   +'<label>Example sentence (optional)</label><input id="fe" autocomplete="off">'
+   +'<label>Synonym group (optional)</label><input id="fg" autocomplete="off">'
    +'<div class="row"><button class="btn p" id="addbtn">Add card</button></div>'
    +'<div class="msg">'+esc(msg)+'</div></div>';
   document.getElementById("addbtn").onclick=function(){
@@ -326,7 +358,7 @@ function renderAdd(v){
 function renderCards(v,q){
   var list=cards.filter(function(c){return !q||c.w.toLowerCase().indexOf(q.toLowerCase())>-1||c.d.toLowerCase().indexOf(q.toLowerCase())>-1});
   var html='<div class="panel"><input id="search" placeholder="Search words or meanings" value="'+esc(q)+'">'
-   +'<p class="hint">'+list.length+' cards</p>';
+   +'<p class="hint" style="margin-top:10px">'+list.length+' cards</p>';
   list.slice(0,200).forEach(function(c){
     html+='<div class="item"><div><b>'+esc(c.w)+'</b><span>'+esc(c.d)+'</span></div><button data-id="'+c.id+'">Delete</button></div>';
   });
@@ -342,14 +374,14 @@ function renderCards(v,q){
 
 function renderData(v){
   v.innerHTML='<div class="panel"><h2>Import cards (CSV)</h2>'
-   +'<p class="hint">Columns: word, meaning, example, group. A header row is optional. You can paste rows or choose a file.</p>'
+   +'<p class="hint">Columns: word, meaning, example, group. A header row is optional. Paste rows or choose a file.</p>'
    +'<textarea id="paste" placeholder="abate,to become less intense,The storm abated.,decrease"></textarea>'
    +'<div class="row"><button class="btn p" id="imp">Import pasted rows</button>'
    +'<input type="file" id="file" accept=".csv,.txt" style="width:auto"></div>'
-   +'<div class="msg" id="m1">'+esc(msg)+'</div></div>'
-   +'<div class="panel"><h2>Settings</h2><label>New cards per day</label>'
+   +'<div class="msg">'+esc(msg)+'</div></div>'
+   +'<div class="panel"><h2>Daily goal</h2><label>New cards per day</label>'
    +'<input id="npd" type="number" min="0" max="200" value="'+settings.newPerDay+'">'
-   +'<div class="row"><button class="btn" id="setbtn">Save setting</button></div></div>'
+   +'<div class="row"><button class="btn" id="setbtn">Save</button></div></div>'
    +'<div class="panel"><h2>Backup</h2>'
    +'<p class="hint">Progress is stored in this browser only. Export a backup now and then, and import it on another device.</p>'
    +'<div class="row"><button class="btn" id="expcsv">Export cards (CSV)</button><button class="btn" id="expjson">Export progress (JSON)</button></div>'
@@ -364,7 +396,7 @@ function renderData(v){
     var r=new FileReader();r.onload=function(){var n=importRows(parseCSV(String(r.result)));msg="Imported "+n+" cards.";render()};r.readAsText(f);
   };
   document.getElementById("setbtn").onclick=function(){
-    settings.newPerDay=Math.max(0,parseInt(document.getElementById("npd").value,10)||0);save();msg="Setting saved.";render();
+    settings.newPerDay=Math.max(0,parseInt(document.getElementById("npd").value,10)||0);save();msg="Saved.";render();
   };
   document.getElementById("expcsv").onclick=function(){
     var out="word,meaning,example,group\n"+cards.map(function(c){return [c.w,c.d,c.e,c.g].map(csvCell).join(",")}).join("\n");
@@ -376,22 +408,21 @@ function renderData(v){
   document.getElementById("jfile").onchange=function(e){
     var f=e.target.files[0];if(!f)return;
     var r=new FileReader();r.onload=function(){
-      try{var o=JSON.parse(String(r.result));if(o.cards&&o.cards.length){cards=o.cards;if(o.settings)settings=o.settings;save();buildQueue();msg="Backup restored.";render()}else{msg="That file has no cards."; render()}}
+      try{var o=JSON.parse(String(r.result));if(o.cards&&o.cards.length){cards=o.cards;if(o.settings){for(var k in o.settings)settings[k]=o.settings[k]}save();buildQueue();msg="Backup restored.";render()}else{msg="That file has no cards.";render()}}
       catch(err){msg="Could not read that file.";render()}
     };r.readAsText(f);
   };
   document.getElementById("reset").onclick=function(){
     if(confirm("This deletes all your cards and progress. Continue?")){
-      cards=SEED.map(function(l){var p=l.split("|");return mk(p[0],p[1],p[2],p[3])});
-      settings.newToday=0;save();buildQueue();msg="Reset done.";render();
+      cards=seedDeck();settings.newToday=0;settings.streak=0;settings.last="";save();buildQueue();msg="Reset done.";render();
     }
   };
 }
 
 document.addEventListener("keydown",function(e){
   if(view!=="study"||/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
-  if(e.code==="Space"){e.preventDefault();if(!flipped&&byId(queue[0])){flipped=true;render()}}
-  else if(flipped&&"1234".indexOf(e.key)>-1&&e.key){rate(parseInt(e.key,10)-1)}
+  if(e.code==="Space"){e.preventDefault();flip()}
+  else if(flipped&&e.key&&"1234".indexOf(e.key)>-1){rate(parseInt(e.key,10)-1)}
 });
 init();
 </script>
