@@ -5,43 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GRE Flashcards</title>
 <style>
-:root{--bg:#f6f7f9;--card:#fff;--text:#1b1f24;--muted:#5d6670;--line:#d9dde2;--accent:#1f5fbf;--again:#c0392b;--hard:#d98a00;--good:#2e8b57;--easy:#2874a6}
-@media (prefers-color-scheme:dark){:root{--bg:#14171a;--card:#1d2125;--text:#eceff2;--muted:#9aa4ae;--line:#323940;--accent:#6aa3f5;--again:#e06a5c;--hard:#e0a63a;--good:#57b985;--easy:#5ba3d0}}
+:root{--bg:#f4f6fa;--surface:#ffffff;--text:#16202c;--muted:#64707d;--line:#e2e7ee;--accent:#2457c5;--accent-soft:#e8eefb;--again:#c8453a;--hard:#c98a1b;--good:#2f8f5b;--easy:#2b78b5;--shadow:0 1px 2px rgba(16,32,52,.06),0 8px 24px rgba(16,32,52,.07)}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1318;--surface:#181e26;--text:#e8edf3;--muted:#98a3b0;--line:#2a323d;--accent:#7aa7f0;--accent-soft:#1d2a40;--again:#e0695d;--hard:#dfa845;--good:#58bb85;--easy:#62a6d6;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.45}
-.wrap{max-width:680px;margin:0 auto;padding:12px 14px 40px}
-h1{font-size:20px;margin:6px 0 10px}
-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-nav button,.btn{border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 14px;border-radius:8px;font-size:14px;cursor:pointer}
-nav button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.stats{display:flex;gap:8px;margin-bottom:12px}
-.stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px;text-align:center;font-size:12px;color:var(--muted)}
-.stat b{display:block;font-size:20px;color:var(--text)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 18px;min-height:230px;text-align:center;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:10px}
-.word{font-size:32px;font-weight:bold;word-break:break-word}
-.def{font-size:18px}.ex{font-size:15px;color:var(--muted);font-style:italic}
-.grp{font-size:13px;color:var(--accent)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:18px 16px 48px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.logo{width:40px;height:40px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;letter-spacing:.5px}
+header h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.2px}
+header p{margin:0;font-size:13px;color:var(--muted)}
+nav{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:18px;box-shadow:var(--shadow)}
+nav button{flex:1;border:0;background:transparent;color:var(--muted);padding:10px 6px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+nav button:hover{color:var(--text)}
+nav button.on{background:var(--accent);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat b{display:block;font-size:24px;letter-spacing:-.5px;color:var(--text);font-weight:700;margin-bottom:2px}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:34px 22px;min-height:280px;text-align:center;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;box-shadow:var(--shadow);animation:fade .2s ease}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.tag{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tag.r{left:auto;right:16px}
+.word{font-size:36px;font-weight:700;letter-spacing:-.6px;word-break:break-word}
+.rule{width:44px;height:3px;background:var(--accent);border-radius:99px;opacity:.5}
+.def{font-size:19px;max-width:520px}
+.ex{font-size:15px;color:var(--muted);font-style:italic;max-width:520px}
+.grp{display:inline-block;font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:99px}
 .hint{font-size:13px;color:var(--muted)}
-.rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
-.rate button{padding:12px 4px;border:0;border-radius:8px;color:#fff;font-size:14px;cursor:pointer}
-.rate small{display:block;font-size:11px;opacity:.9}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
-label{display:block;font-size:13px;color:var(--muted);margin:8px 0 3px}
-input,textarea{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font-size:15px;font-family:inherit}
-textarea{min-height:110px}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.rate{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.rate button{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:11px 4px 9px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:var(--shadow);transition:transform .1s}
+.rate button:active{transform:scale(.97)}
+.rate button span{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:2px}
+.rate .a{border-bottom:3px solid var(--again)}.rate .h{border-bottom:3px solid var(--hard)}.rate .g{border-bottom:3px solid var(--good)}.rate .e{border-bottom:3px solid var(--easy)}
+.keys{text-align:center;font-size:12px;color:var(--muted);margin-top:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.panel h2{font-size:15px;margin:0 0 4px;font-weight:700}
+.panel p.hint{margin:2px 0 8px}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:12px 0 5px;letter-spacing:.2px}
+input,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font-size:15px;font-family:inherit}
+input:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+textarea{min-height:110px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{border-color:var(--accent)}
 .btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn.d{color:var(--again);border-color:var(--again)}
-.item{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
-.item span{color:var(--muted)}
-.item button{border:0;background:none;color:var(--again);cursor:pointer;font-size:13px}
-.msg{font-size:13px;color:var(--good);margin-top:8px}
-.hide{display:none}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.item:last-child{border-bottom:0}
+.item b{display:block}
+.item span{color:var(--muted);font-size:13px}
+.item button{border:0;background:none;color:var(--again);cursor:pointer;font-size:13px;font-weight:600;font-family:inherit}
+.msg{font-size:13px;color:var(--good);margin-top:10px;font-weight:600}
+.empty{text-align:center;padding:36px 18px}
+.empty .big{font-size:20px;font-weight:700;margin-bottom:6px}
+@media (max-width:480px){.word{font-size:30px}.def{font-size:17px}.card{min-height:250px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>GRE Flashcards</h1>
+<header><div class="logo">GRE</div><div><h1>GRE Vocabulary</h1><p>Spaced-repetition flashcards</p></div></header>
 <nav id="nav"></nav>
 <div id="view"></div>
 </div>
@@ -139,7 +163,7 @@ var SEED = [
 ];
 
 var KEY="gre_cards_v1", SKEY="gre_settings_v1";
-var cards=[], settings={newPerDay:30,date:"",newToday:0}, view="study", queue=[], flipped=false, msg="";
+var cards=[], settings={newPerDay:30,date:"",newToday:0}, view="study", queue=[], flipped=false, msg="", sessionTotal=0, sessionDone=0;
 
 function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function fetchStore(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
@@ -164,7 +188,7 @@ function buildQueue(){
   var room=Math.max(0,settings.newPerDay-settings.newToday);
   var fresh=cards.filter(function(c){return !c.seen}).slice(0,room);
   queue=due.concat(fresh).map(function(c){return c.id});
-  flipped=false;
+  flipped=false;sessionTotal=queue.length;sessionDone=0;
 }
 function byId(id){return cards.filter(function(c){return c.id===id})[0]}
 
@@ -184,9 +208,19 @@ function rate(q){
     if(q===1)c.ease=Math.max(1.3,c.ease-0.15);
     if(q===3)c.ease+=0.15;
     c.due=Date.now()+c.ivl*86400000;
-    queue.shift();
+    queue.shift();sessionDone++;
   }
   flipped=false;save();render();
+}
+
+
+function label(days){return days<1?"10 min":(days===1?"1 day":days+" days")}
+function preview(c,q){
+  if(q===0)return "10 min";
+  var reps=c.reps+1,ivl;
+  if(reps===1){ivl=q===3?4:1}
+  else{var f=q===1?1.2:(q===2?c.ease:c.ease*1.3);ivl=Math.max(c.ivl+1,Math.round(c.ivl*f))}
+  return label(ivl);
 }
 
 function counts(){
@@ -242,26 +276,30 @@ function render(){
 
 function renderStudy(v){
   var k=counts();
-  var html='<div class="stats"><div class="stat"><b>'+k.due+'</b>Due</div><div class="stat"><b>'+k.fresh+'</b>New today</div><div class="stat"><b>'+k.learned+' / '+k.total+'</b>Learned</div></div>';
+  var html='<div class="stats"><div class="stat"><b>'+k.due+'</b>Due</div><div class="stat"><b>'+k.fresh+'</b>New today</div><div class="stat"><b>'+k.learned+'/'+k.total+'</b>Learned</div></div>';
   var c=byId(queue[0]);
   if(!c){
-    html+='<div class="panel"><b>All done for now.</b><p class="hint">No cards are due. Add more words, raise the daily new-card limit in Data, or come back later.</p></div>';
+    html+='<div class="panel empty"><div class="big">All done for now</div><p class="hint">No cards are due. Add more words, raise the daily new-card limit in Data, or come back later.</p></div>';
     v.innerHTML=html;return;
   }
-  html+='<div class="card" id="card"><div class="word">'+esc(c.w)+'</div>';
+  var pct=sessionTotal?Math.round(sessionDone/sessionTotal*100):0;
+  html+='<div class="progress"><i style="width:'+pct+'%"></i></div>';
+  html+='<div class="card" id="card"><span class="tag">'+(flipped?"Meaning":"Word")+'</span><span class="tag r">'+(sessionDone+1)+' of '+sessionTotal+'</span>';
+  html+='<div class="word">'+esc(c.w)+'</div>';
   if(flipped){
-    html+='<div class="def">'+esc(c.d)+'</div>';
+    html+='<div class="rule"></div><div class="def">'+esc(c.d)+'</div>';
     if(c.e)html+='<div class="ex">'+esc(c.e)+'</div>';
-    if(c.g)html+='<div class="grp">Group: '+esc(c.g)+'</div>';
-  }else html+='<div class="hint">Tap the card or press Space to show the meaning</div>';
+    if(c.g)html+='<div class="grp">'+esc(c.g)+'</div>';
+  }else html+='<div class="hint">Tap the card to reveal the meaning</div>';
   html+='</div>';
   if(flipped){
     html+='<div class="rate">'
-     +'<button style="background:var(--again)" data-q="0">Again<small>1</small></button>'
-     +'<button style="background:var(--hard)" data-q="1">Hard<small>2</small></button>'
-     +'<button style="background:var(--good)" data-q="2">Good<small>3</small></button>'
-     +'<button style="background:var(--easy)" data-q="3">Easy<small>4</small></button></div>';
+     +'<button class="a" data-q="0">Again<span>'+preview(c,0)+'</span></button>'
+     +'<button class="h" data-q="1">Hard<span>'+preview(c,1)+'</span></button>'
+     +'<button class="g" data-q="2">Good<span>'+preview(c,2)+'</span></button>'
+     +'<button class="e" data-q="3">Easy<span>'+preview(c,3)+'</span></button></div>';
   }
+  html+='<div class="keys">Keyboard: Space to flip, 1-4 to rate</div>';
   v.innerHTML=html;
   document.getElementById("card").onclick=function(){if(!flipped){flipped=true;render()}};
   Array.prototype.forEach.call(v.querySelectorAll(".rate button"),function(b){
@@ -270,7 +308,7 @@ function renderStudy(v){
 }
 
 function renderAdd(v){
-  v.innerHTML='<div class="panel"><b>Add a card</b>'
+  v.innerHTML='<div class="panel"><h2>Add a card</h2>'
    +'<label>Word</label><input id="fw">'
    +'<label>Meaning</label><input id="fd">'
    +'<label>Example sentence (optional)</label><input id="fe">'
@@ -290,7 +328,7 @@ function renderCards(v,q){
   var html='<div class="panel"><input id="search" placeholder="Search words or meanings" value="'+esc(q)+'">'
    +'<p class="hint">'+list.length+' cards</p>';
   list.slice(0,200).forEach(function(c){
-    html+='<div class="item"><div><b>'+esc(c.w)+'</b> <span>'+esc(c.d)+'</span></div><button data-id="'+c.id+'">Delete</button></div>';
+    html+='<div class="item"><div><b>'+esc(c.w)+'</b><span>'+esc(c.d)+'</span></div><button data-id="'+c.id+'">Delete</button></div>';
   });
   if(list.length>200)html+='<p class="hint">Showing the first 200. Search to narrow down.</p>';
   html+='</div>';
@@ -303,16 +341,16 @@ function renderCards(v,q){
 }
 
 function renderData(v){
-  v.innerHTML='<div class="panel"><b>Import cards (CSV)</b>'
+  v.innerHTML='<div class="panel"><h2>Import cards (CSV)</h2>'
    +'<p class="hint">Columns: word, meaning, example, group. A header row is optional. You can paste rows or choose a file.</p>'
    +'<textarea id="paste" placeholder="abate,to become less intense,The storm abated.,decrease"></textarea>'
    +'<div class="row"><button class="btn p" id="imp">Import pasted rows</button>'
    +'<input type="file" id="file" accept=".csv,.txt" style="width:auto"></div>'
    +'<div class="msg" id="m1">'+esc(msg)+'</div></div>'
-   +'<div class="panel"><b>Settings</b><label>New cards per day</label>'
+   +'<div class="panel"><h2>Settings</h2><label>New cards per day</label>'
    +'<input id="npd" type="number" min="0" max="200" value="'+settings.newPerDay+'">'
    +'<div class="row"><button class="btn" id="setbtn">Save setting</button></div></div>'
-   +'<div class="panel"><b>Backup</b>'
+   +'<div class="panel"><h2>Backup</h2>'
    +'<p class="hint">Progress is stored in this browser only. Export a backup now and then, and import it on another device.</p>'
    +'<div class="row"><button class="btn" id="expcsv">Export cards (CSV)</button><button class="btn" id="expjson">Export progress (JSON)</button></div>'
    +'<label>Restore progress from a JSON backup</label><input type="file" id="jfile" accept=".json">'
